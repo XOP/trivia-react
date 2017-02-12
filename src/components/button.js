@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import cls from 'classnames';
+
 class Button extends Component {
     constructor(props) {
         super(props);
@@ -12,9 +14,19 @@ class Button extends Component {
     }
     
     render() {
+        const {
+            full,
+            size,
+            mode
+        } = this.props;
+
         return (
             <button 
-                className="trivia-button"
+                className={cls('button', {
+                    'is-fullwidth': full,
+                    [`is-${size}`]: size,
+                    [`is-${mode}`]: mode
+                })}
                 onClick={this.handleClick}
             >
                 {this.props.children}
@@ -25,7 +37,10 @@ class Button extends Component {
 
 Button.propTypes = {
     children: PropTypes.node,
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
+    full: PropTypes.bool,
+    mode: PropTypes.string,
+    size: PropTypes.string
 };
 
 export default Button;

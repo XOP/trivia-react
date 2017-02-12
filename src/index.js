@@ -10,13 +10,24 @@ import Splash from './components/splash';
 
 require('./favicon.ico');
 
+import './main.scss';
+
 render(
     <App>
         <Splash
             heading="Welcome"
             text="Let's play Trivia"
         />
-        <Button>Start</Button>
+
+        <div className="section">
+            <Button
+                full
+                mode="primary"
+                size="medium"
+            >
+                Start
+            </Button>
+        </div>
     </App>,
     document.getElementById('app')
 );
