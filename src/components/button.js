@@ -10,19 +10,21 @@ class Button extends Component {
     }
 
     handleClick(e) {
-        console.log(e);
+        this.props.onClick(e);
     }
-    
+
     render() {
         const {
+            disabled,
             full,
             size,
             mode
         } = this.props;
 
         return (
-            <button 
+            <button
                 className={cls('button', {
+                    'is-disabled': disabled,
                     'is-fullwidth': full,
                     [`is-${size}`]: size,
                     [`is-${mode}`]: mode
@@ -37,7 +39,8 @@ class Button extends Component {
 
 Button.propTypes = {
     children: PropTypes.node,
-    handleClick: PropTypes.func,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func,
     full: PropTypes.bool,
     mode: PropTypes.string,
     size: PropTypes.string

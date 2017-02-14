@@ -6,14 +6,14 @@ class Splash extends Component {
             <section className="trivia-splash">
                 <div className="section">
                     <div className="trivia-splash__heading">
-                        <h2 className="title is-2">
+                        <h1 className="title is-2">
                             {this.props.heading}
-                        </h2>
+                        </h1>
                     </div>
                     <div className="trivia-splash__text">
-                        <h4 className="subtitle is-4">
+                        <h2 className="subtitle is-4">
                             {this.props.text}
-                        </h4>
+                        </h2>
                     </div>
                 </div>
             </section>
