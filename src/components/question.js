@@ -17,9 +17,15 @@ class Question extends Component {
                 </div>
                 <div className="box">
                     {
-                        this.props.answers.map(item => {
+                        this.props.answers.map( (item, idx) => {
                             return (
-                                <Answer>
+                                <Answer 
+                                    key={idx}
+                                    isDisabled={this.props.isNextReady}
+                                    correct={item.correct}
+                                    hint={item.hint}
+                                    onClick={this.props.onAnswer}
+                                >
                                     {item.answer}
                                 </Answer>
                             );    
@@ -33,6 +39,8 @@ class Question extends Component {
 
 Question.propTypes = {
     answers: PropTypes.arrayOf(PropTypes.object),
+    isNextReady: PropTypes.bool,
+    onAnswer: PropTypes.func,
     step: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string

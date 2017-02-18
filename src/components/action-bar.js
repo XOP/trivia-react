@@ -33,7 +33,11 @@ class ActionBar extends Component {
                                 onClick={this.props.onNextClick}
                                 size="medium"
                             >
-                                Next question
+                                {
+                                    this.props.isLast ?
+                                    'Show results' :
+                                    'Next question'
+                                }
                             </Button>
                         )
                     }
@@ -46,6 +50,7 @@ class ActionBar extends Component {
 ActionBar.propTypes = {
     isStart: PropTypes.bool,
     isComplete: PropTypes.bool,
+    isLast: PropTypes.bool,
     isNextReady: PropTypes.bool,
     onStartClick: PropTypes.func,
     onNextClick: PropTypes.func

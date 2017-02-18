@@ -10,6 +10,7 @@ class App extends Component {
 
         this.startStep = this.startStep.bind(this);
         this.nextStep = this.nextStep.bind(this);
+        this.handleAnswer = this.handleAnswer.bind(this);
 
         this.state = {
             currentStep: 0,
@@ -57,27 +58,42 @@ class App extends Component {
                         }
                     ]
                 }
-            ]
+            ],
+            
+            result: {
+                0: 'You definitely need more practicing',
+                1: 'Not bad, but could be better',
+                2: 'Outstanding!'
+            }
         };
     }
 
     nextStep() {
         this.setState({
-            currentStep: this.state.currentStep + 1
+            currentStep: this.state.currentStep + 1,
+            isNextReady: false
         });
     }
 
     startStep() {
         this.setState({
             currentStep: 1,
-            isNextReady: true
+            correctAnswers: 0
         });
     }
 
+    handleAnswer(correct) {
+        this.setState({
+            isNextReady: true,
+            correctAnswers: correct ? this.state.correctAnswers + 1 : this.state.correctAnswers
+        });
+    }
+    
     render() {
         const totalSteps = this.state.questions.length;
         const isStart = this.state.currentStep === 0;
         const isComplete = this.state.currentStep === totalSteps + 1;
+        const isLast = this.state.currentStep === totalSteps;
 
         return (
             <div className="container">
@@ -95,7 +111,7 @@ class App extends Component {
                         {
                             isComplete &&
                             <Splash
-                                heading="You did great!"
+                                heading={`You scored ${this.state.correctAnswers} of ${totalSteps}. ${this.state.result[this.state.correctAnswers]}`}
                                 text="Share your result"
                             />
                         }
@@ -105,7 +121,10 @@ class App extends Component {
                                 if (this.state.currentStep === idx + 1) {
                                     return (
                                         <Question
+                                            key={idx}
                                             answers={item.answers}
+                                            isNextReady={this.state.isNextReady}
+                                            onAnswer={this.handleAnswer}
                                             step={this.state.currentStep}
                                             totalSteps={totalSteps}
                                         >
@@ -119,6 +138,7 @@ class App extends Component {
                         <ActionBar
                             isStart={isStart}
                             isComplete={isComplete}
+                            isLast={isLast}
                             isNextReady={this.state.isNextReady}
                             onStartClick={this.startStep}
                             onNextClick={this.nextStep}
