@@ -9,7 +9,13 @@ require('./favicon.ico');
 
 import './main.scss';
 
+const getQuestions = () => {
+    return fetch('http://beta.json-generator.com/api/json/get/Eycij5-KM');
+};
+
 render(
-    <App />,
+    <App 
+        questions={getQuestions()}
+    />,
     document.getElementById('app')
 );

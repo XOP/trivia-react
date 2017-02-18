@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import ActionBar from './action-bar';
 import Question from './question';
@@ -17,57 +17,32 @@ class App extends Component {
             isNextReady: false,
             
             correctAnswers: 0,
-            questions: [
-                {
-                    question: 'Question 1',
-                    answers: [
-                        {
-                            answer: 'Answer 1',
-                            hint: 'You are right!',
-                            correct: true
-                        },
-                        {
-                            answer: 'Answer 2',
-                            hint: 'Nope, not even close',
-                            correct: false
-                        },
-                        {
-                            answer: 'Answer 3',
-                            hint: 'Keep practicing',
-                            correct: false
-                        }
-                    ]
-                },
-                {
-                    question: 'Question 2',
-                    answers: [
-                        {
-                            answer: 'Answer 1',
-                            hint: 'Nope, not even close',
-                            correct: false
-                        },
-                        {
-                            answer: 'Answer 2',
-                            hint: 'You are right!',
-                            correct: true
-                        },
-                        {
-                            answer: 'Answer 3',
-                            hint: 'Keep practicing',
-                            correct: false
-                        }
-                    ]
-                }
-            ],
+            questions: [],
             
             result: {
                 0: 'You definitely need more practicing',
                 1: 'Not bad, but could be better',
-                2: 'Outstanding!'
+                2: 'Not bad, but could be better',
+                3: 'Not bad, but could be better',
+                4: 'You are really getting somewhere, sport!',
+                5: 'You are really getting somewhere, sport!',
+                6: 'Nearly perfect!',
+                7: 'Outstanding!',
+                8: 'Outstanding!'
             }
         };
     }
 
+    componentDidMount() {
+        this.props.questions.then(res => {
+            res.json().then((val) => {
+                this.setState({
+                    questions: val
+                })
+            })
+        });
+    }
+    
     nextStep() {
         this.setState({
             currentStep: this.state.currentStep + 1,
@@ -99,7 +74,6 @@ class App extends Component {
             <div className="container">
                 <div className="columns">
                     <div className="column is-half is-offset-one-quarter-desktop">
-
                         {
                             !isComplete &&
                             <Splash
@@ -150,5 +124,16 @@ class App extends Component {
         );
     }
 }
+
+App.defaultProps = {
+    questions: []    
+};
+
+App.propTypes = {
+    questions: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array
+    ])
+};
 
 export default App;
