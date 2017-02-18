@@ -13,8 +13,51 @@ class App extends Component {
 
         this.state = {
             currentStep: 0,
-            totalSteps: 6,
-            isNextReady: false
+            isNextReady: false,
+            
+            correctAnswers: 0,
+            questions: [
+                {
+                    question: 'Question 1',
+                    answers: [
+                        {
+                            answer: 'Answer 1',
+                            hint: 'You are right!',
+                            correct: true
+                        },
+                        {
+                            answer: 'Answer 2',
+                            hint: 'Nope, not even close',
+                            correct: false
+                        },
+                        {
+                            answer: 'Answer 3',
+                            hint: 'Keep practicing',
+                            correct: false
+                        }
+                    ]
+                },
+                {
+                    question: 'Question 2',
+                    answers: [
+                        {
+                            answer: 'Answer 1',
+                            hint: 'Nope, not even close',
+                            correct: false
+                        },
+                        {
+                            answer: 'Answer 2',
+                            hint: 'You are right!',
+                            correct: true
+                        },
+                        {
+                            answer: 'Answer 3',
+                            hint: 'Keep practicing',
+                            correct: false
+                        }
+                    ]
+                }
+            ]
         };
     }
 
@@ -32,8 +75,9 @@ class App extends Component {
     }
 
     render() {
+        const totalSteps = this.state.questions.length;
         const isStart = this.state.currentStep === 0;
-        const isComplete = this.state.currentStep === this.state.totalSteps + 1;
+        const isComplete = this.state.currentStep === totalSteps + 1;
 
         return (
             <div className="container">
@@ -56,13 +100,22 @@ class App extends Component {
                             />
                         }
 
-                        <Question
-                            step={this.state.currentStep}
-                            totalSteps={this.state.totalSteps}
-                        >
-                            What is the main thing in the universe?
-                        </Question>
-
+                        {
+                            this.state.questions.map((item, idx) => {
+                                if (this.state.currentStep === idx + 1) {
+                                    return (
+                                        <Question
+                                            answers={item.answers}
+                                            step={this.state.currentStep}
+                                            totalSteps={totalSteps}
+                                        >
+                                            {item.question}
+                                        </Question>
+                                    );
+                                }
+                            })
+                        }
+                        
                         <ActionBar
                             isStart={isStart}
                             isComplete={isComplete}

@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import Answer from './answer';
+
 class Question extends Component {
     render() {
-        const isVisible = this.props.step > 0 && this.props.step <= this.props.totalSteps;
-
-        if (!isVisible) return null;
-
         return (
             <section className="trivia-question">
                 <div className="box">
@@ -17,12 +15,24 @@ class Question extends Component {
                         {this.props.children}
                     </strong>
                 </div>
+                <div className="box">
+                    {
+                        this.props.answers.map(item => {
+                            return (
+                                <Answer>
+                                    {item.answer}
+                                </Answer>
+                            );    
+                        })
+                    }
+                </div>
             </section>
         );
     }
 }
 
 Question.propTypes = {
+    answers: PropTypes.arrayOf(PropTypes.object),
     step: PropTypes.oneOfType([
         PropTypes.number,
         PropTypes.string
@@ -32,6 +42,10 @@ Question.propTypes = {
         PropTypes.string
     ]),
     children: PropTypes.node
+};
+
+Question.defaultProps = {
+    answers: []
 };
 
 export default Question;
