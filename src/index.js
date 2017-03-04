@@ -1,21 +1,21 @@
 /* eslint-disable import/default */
 
 import React from 'react';
-import {render} from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import App from './components/app';
+import reducers from './reducers';
+
+import App from './_components/app';
 
 require('./favicon.ico');
 
 import './main.scss';
 
-const getQuestions = () => {
-    return fetch('http://beta.json-generator.com/api/json/get/Eycij5-KM');
-};
-
 render(
-    <App 
-        questions={getQuestions()}
-    />,
+    <Provider store={createStore(reducers)}>
+        <App />
+    </Provider>,
     document.getElementById('app')
 );

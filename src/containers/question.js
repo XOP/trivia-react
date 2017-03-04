@@ -7,15 +7,20 @@ import Question from '../_components/question';
 
 class SmartQuestion extends Component {
     render() {
+        const {
+            question,
+            answers
+        } = this.props.question;
+
         return (
             <Question
                 isCorrect={null}
-                question={this.props.question}
+                question={question}
                 step={this.props.step}
                 totalSteps={this.props.totalSteps}
             >
                 {
-                    this.props.question.answers.map( (item, idx) => {
+                    answers.map( (item, idx) => {
                         return (
                             <Answer
                                 key={idx}
@@ -49,7 +54,7 @@ SmartQuestion.propTypes = {
 
 const mapStateToProps = state => ({
     isNextReady: state.isNextReady,
-    question: state.question,
+    question: state.currentQuestion,
     step: state.currentStep,
 });
 
