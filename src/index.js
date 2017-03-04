@@ -7,7 +7,7 @@ import { createStore } from 'redux';
 
 import reducers from './reducers';
 
-import App from './_components/app';
+import App from './containers/app';
 
 require('./favicon.ico');
 

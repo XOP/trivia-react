@@ -9,9 +9,12 @@ class SmartQuestion extends Component {
     render() {
         const {
             question,
-            answers
+            answers = []
         } = this.props.question;
 
+        console.log('step', this.props.step);
+        
+        
         return (
             <Question
                 isCorrect={null}
@@ -20,7 +23,7 @@ class SmartQuestion extends Component {
                 totalSteps={this.props.totalSteps}
             >
                 {
-                    answers.map( (item, idx) => {
+                    answers.length && answers.map( (item, idx) => {
                         return (
                             <Answer
                                 key={idx}
@@ -39,6 +42,10 @@ class SmartQuestion extends Component {
     }
 }
 
+SmartQuestion.defaultProps = {
+    question: {}
+};
+
 SmartQuestion.propTypes = {
     isNextReady: PropTypes.bool,
     onAnswer: PropTypes.func,
@@ -53,9 +60,7 @@ SmartQuestion.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    isNextReady: state.isNextReady,
-    question: state.currentQuestion,
-    step: state.currentStep,
+    question: state.currentQuestion
 });
 
 export default connect(mapStateToProps)(SmartQuestion);

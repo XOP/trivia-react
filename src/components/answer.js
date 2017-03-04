@@ -13,6 +13,12 @@ class Answer extends Component {
         }
     }
     
+    componentWillReceiveProps() {
+        this.setState({
+            isAnswered: false
+        })
+    }
+    
     handleClick(e) {
         if (this.props.isDisabled) return false;
 
