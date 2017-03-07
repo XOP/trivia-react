@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux';
 
-import Answer from '../components/answer';
+import Answer from '../_components/answer';
 import Question from '../_components/question';
 
 class SmartQuestion extends Component {
@@ -12,9 +12,6 @@ class SmartQuestion extends Component {
             answers = []
         } = this.props.question;
 
-        console.log('step', this.props.step);
-        
-        
         return (
             <Question
                 isCorrect={null}
@@ -41,10 +38,6 @@ class SmartQuestion extends Component {
         );
     }
 }
-
-SmartQuestion.defaultProps = {
-    question: {}
-};
 
 SmartQuestion.propTypes = {
     isNextReady: PropTypes.bool,

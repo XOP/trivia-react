@@ -5,9 +5,18 @@ import { bindActionCreators } from 'redux';
 
 import { nextQuestionSelect } from '../actions/nextQuestionSelect';
 
+import ActionBar from '../_components/action-bar';
+
 import Question from './question';
 
-const totalSteps = 10;
+const resources = {
+    actionBar: {
+        nextQuestion: 'Next Question',
+        restart: 'Restart',
+        showResults: 'Show Results',
+        start: 'Start'
+    }
+};
 
 class App extends Component {
     constructor(props) {
@@ -16,8 +25,7 @@ class App extends Component {
         this.handleAnswer = this.handleAnswer.bind(this);
         
         this.state = {
-            currentStep: this.props.currentStep,
-            isNextReady: this.props.isNextReady
+            currentStep: 0
         };
     }
     
@@ -30,6 +38,11 @@ class App extends Component {
     }
     
     render() {
+        const totalSteps = 10;
+        const isStart = this.state.currentStep === 0;
+        const isComplete = this.state.currentStep === totalSteps + 1;
+        const isLast = this.state.currentStep === totalSteps;
+        
         return (
             <div className="container">
                 <div className="columns">
@@ -42,6 +55,16 @@ class App extends Component {
                             totalSteps={totalSteps}
                         />
 
+                        <ActionBar
+                            isStart={isStart}
+                            isComplete={isComplete}
+                            isLastQuestion={isLast}
+                            isNextReady={this.state.isNextReady}
+                            onStartClick={this.handleAnswer}
+                            onNextClick={this.handleAnswer}
+                            resources={resources.actionBar}
+                        />
+                        
                     </div>
                 </div>
             </div>
@@ -50,12 +73,10 @@ class App extends Component {
 }
 
 App.defaultProps = {
-    currentStep: 0,
     isNextReady: false
 };
 
 App.propTypes = {
-    currentStep: PropTypes.number,
     isNextReady: PropTypes.bool,
     nextQuestionSelect: PropTypes.func
 };

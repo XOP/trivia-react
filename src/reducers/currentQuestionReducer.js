@@ -1,11 +1,10 @@
-import QuestionsReducer from './questionsReducer';
+import initialState from './initialState';
+import questions from './questions';
 
-const firstQuestion = QuestionsReducer()[0];
-
-export default (state = firstQuestion, action) => {
-    switch (action.type) {
+export default (state = initialState.currentQuestion, { type, currentStep }) => {
+    switch (type) {
         case 'NEXT_QUESTION':
-            return QuestionsReducer()[action.payload];
+            return questions[currentStep];
     }
 
     return state;
