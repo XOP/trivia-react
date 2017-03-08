@@ -4,7 +4,6 @@ export default {
     isNextReady: false,
 
     score: 0,
-    result: '',
 
     questions: [],
     results: []

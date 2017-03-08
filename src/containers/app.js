@@ -3,9 +3,15 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { nextQuestionSelect } from '../actions';
+import {
+    firstQuestionSelect,
+    nextQuestionSelect,
+    selectCorrectAnswer,
+    selectIncorrectAnswer
+} from '../actions';
 
 import ActionBar from '../_components/action-bar';
+import Splash from '../_components/splash';
 
 import Question from './question';
 
@@ -22,15 +28,44 @@ class App extends Component {
     constructor(props) {
         super(props);
 
+        this.handleStart = this.handleStart.bind(this);
+        this.handleNext = this.handleNext.bind(this);
         this.handleAnswer = this.handleAnswer.bind(this);
 
         this.state = {
-            isNextReady: true
+            isNextReady: false // todo
         };
     }
 
-    handleAnswer() {
+    handleStart() {
+        this.props.firstQuestionSelect();
+    }
+
+    handleNext() {
         this.props.nextQuestionSelect(this.props.currentStep);
+    }
+
+    handleAnswer(isCorrect) {
+        if (isCorrect) {
+            this.props.selectCorrectAnswer();
+        } else {
+            this.props.selectIncorrectAnswer();
+        }
+    }
+
+    composeScore() {
+        const {
+            results,
+            score,
+            totalSteps
+        } = this.props;
+
+        const allScores = Object.keys(results);
+        const highestScore = Math.max.apply(allScores, this);
+
+        const userScore = (score <= highestScore) ? results[score] : results[highestScore];
+
+        return `Your score: ${userScore} of ${totalSteps}`;
     }
 
     render() {
@@ -45,6 +80,22 @@ class App extends Component {
                 <div className="columns">
                     <div className="column is-half is-offset-one-quarter-desktop">
 
+                        {
+                            !isComplete &&
+                            <Splash
+                                heading="Welcome"
+                                text="Let's play Trivia"
+                            />
+                        }
+
+                        {
+                            isComplete &&
+                            <Splash
+                                heading={this.composeScore()}
+                                text="Share your result"
+                            />
+                        }
+
                         <Question
                             step={currentStep}
                             isNextReady={this.state.isNextReady}
@@ -57,8 +108,8 @@ class App extends Component {
                             isComplete={isComplete}
                             isLastQuestion={isLastQuestion}
                             isNextReady={this.state.isNextReady}
-                            onStartClick={this.handleAnswer}
-                            onNextClick={this.handleAnswer}
+                            onStartClick={this.handleStart}
+                            onNextClick={this.handleNext}
                             resources={resources.actionBar}
                         />
 
@@ -72,18 +123,29 @@ class App extends Component {
 App.propTypes = {
     currentStep: PropTypes.number,
     totalSteps: PropTypes.number,
-    nextQuestionSelect: PropTypes.func
+    nextQuestionSelect: PropTypes.func,
+    selectCorrectAnswer: PropTypes.func,
+    selectIncorrectAnswer: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ nextQuestionSelect }, dispatch);
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        firstQuestionSelect,
+        nextQuestionSelect,
+        selectCorrectAnswer,
+        selectIncorrectAnswer
+    }, dispatch)
+);
 
 const mapStateToProps = state => {
     const currentStep = state.currentStep;
     const totalSteps = state.questions.length;
+    const score = state.score;
 
     return {
         currentStep,
-        totalSteps
+        totalSteps,
+        score
     };
 };
 
