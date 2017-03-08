@@ -12,7 +12,7 @@ const ActionBar = props => {
         onNextClick,
         resources
     } = props;
-    
+
     return (
         <section className="trivia-action-bar">
             <div className="box">
@@ -21,7 +21,7 @@ const ActionBar = props => {
                     <Button
                         full
                         mode="primary"
-                        onClick={ onStartClick }
+                        onClick={onStartClick}
                         size="large"
                     >
                         { resources['start'] }
@@ -30,16 +30,16 @@ const ActionBar = props => {
                         <Button
                             full
                             mode="secondary"
-                            onClick={ onStartClick }
+                            onClick={onStartClick}
                             size="large"
                         >
                             { resources['restart'] }
                         </Button> :
                         <Button
-                            disabled={ !isNextReady }
+                            disabled={!isNextReady}
                             full
                             mode="primary"
-                            onClick={ onNextClick }
+                            onClick={onNextClick}
                             size="medium"
                         >
                             {

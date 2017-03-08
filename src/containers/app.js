@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { nextQuestionSelect } from '../actions/nextQuestionSelect';
+import { nextQuestionSelect } from '../actions';
 
 import ActionBar from '../_components/action-bar';
 
@@ -23,33 +23,32 @@ class App extends Component {
         super(props);
 
         this.handleAnswer = this.handleAnswer.bind(this);
-        
+
         this.state = {
-            currentStep: 0
+            isNextReady: true
         };
     }
-    
-    handleAnswer() {
-        this.props.nextQuestionSelect(this.state.currentStep);
 
-        this.setState({
-            currentStep: this.state.currentStep + 1
-        });
+    handleAnswer() {
+        this.props.nextQuestionSelect(this.props.currentStep);
     }
-    
+
     render() {
         const totalSteps = 10;
-        const isStart = this.state.currentStep === 0;
-        const isComplete = this.state.currentStep === totalSteps + 1;
-        const isLast = this.state.currentStep === totalSteps;
-        
+
+        const { currentStep } = this.props;
+
+        const isStart = currentStep === 0;
+        const isComplete = currentStep === totalSteps + 1;
+        const isLast = currentStep === totalSteps;
+
         return (
             <div className="container">
                 <div className="columns">
                     <div className="column is-half is-offset-one-quarter-desktop">
 
                         <Question
-                            step={this.state.currentStep}
+                            step={currentStep}
                             isNextReady={this.state.isNextReady}
                             onAnswer={this.handleAnswer}
                             totalSteps={totalSteps}
@@ -64,7 +63,7 @@ class App extends Component {
                             onNextClick={this.handleAnswer}
                             resources={resources.actionBar}
                         />
-                        
+
                     </div>
                 </div>
             </div>
@@ -72,17 +71,15 @@ class App extends Component {
     }
 }
 
-App.defaultProps = {
-    isNextReady: false
-};
-
 App.propTypes = {
-    isNextReady: PropTypes.bool,
+    currentStep: PropTypes.number,
     nextQuestionSelect: PropTypes.func
 };
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ nextQuestionSelect }, dispatch);
-}
+const mapDispatchToProps = dispatch => bindActionCreators({ nextQuestionSelect }, dispatch);
 
-export default connect(null, mapDispatchToProps)(App);
+const mapStateToProps = state => ({
+    currentStep: state.currentStep
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

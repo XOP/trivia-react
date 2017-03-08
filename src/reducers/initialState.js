@@ -1,9 +1,11 @@
 export default {
-    currentQuestion: {},
-    currentResult: '',
     currentStep: 0,
+    currentQuestion: null,
     isNextReady: false,
-    correctAnswers: 0,
+
+    score: 0,
+    result: '',
+
     questions: [],
     results: []
-}
+};

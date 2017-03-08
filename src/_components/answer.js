@@ -10,15 +10,15 @@ class Answer extends Component {
 
         this.state = {
             isAnswered: false
-        }
+        };
     }
-    
+
     componentWillReceiveProps() {
         this.setState({
             isAnswered: false
-        })
+        });
     }
-    
+
     handleClick(e) {
         if (this.props.isDisabled) return false;
 
@@ -26,7 +26,7 @@ class Answer extends Component {
             isAnswered: true
         });
 
-        return this.props.onClick(this.props.correct, e);
+        return this.props.onClick(this.props.isCorrect, e);
     }
 
     render() {
@@ -43,9 +43,9 @@ class Answer extends Component {
                             <div>
                                 <strong>
                                     {
-                                        this.props.correct ?
-                                            <i className="fa fa-check"></i> :
-                                            <i className="fa fa-times"></i>
+                                        this.props.isCorrect ?
+                                            <i className="fa fa-check" /> :
+                                            <i className="fa fa-times" />
                                     }
                                 </strong>
                                 &nbsp;
@@ -53,7 +53,7 @@ class Answer extends Component {
                                     {this.props.hint}
                                 </em>
                             </div>
-                        }    
+                        }
                     </div>
                 </div>
             </div>
@@ -63,6 +63,8 @@ class Answer extends Component {
 
 Answer.propTypes = {
     children: PropTypes.node,
+    hint: PropTypes.node,
+    isCorrect: PropTypes.bool,
     isDisabled: PropTypes.bool,
     onClick: PropTypes.func
 };

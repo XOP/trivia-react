@@ -3,12 +3,11 @@ import React, { PropTypes } from 'react';
 const Question = props => {
     const {
         children,
-        isCorrect,
         question,
         step,
         totalSteps
     } = props;
-    
+
     return (
         <section className="trivia-question">
             <div className="box">
@@ -28,17 +27,10 @@ const Question = props => {
 };
 
 Question.propTypes = {
-    children: PropTypes.any,
-    isCorrect: PropTypes.bool,
+    children: PropTypes.node,
     question: PropTypes.node,
-    step: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ]),
-    totalSteps: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ])
+    step: PropTypes.number,
+    totalSteps: PropTypes.number
 };
 
 export default Question;

@@ -7,6 +7,10 @@ import Question from '../_components/question';
 
 class SmartQuestion extends Component {
     render() {
+        if (!this.props.question) {
+            return null;
+        }
+
         const {
             question,
             answers = []
@@ -14,18 +18,17 @@ class SmartQuestion extends Component {
 
         return (
             <Question
-                isCorrect={null}
                 question={question}
                 step={this.props.step}
                 totalSteps={this.props.totalSteps}
             >
                 {
-                    answers.length && answers.map( (item, idx) => {
+                    answers.map( (item, idx) => {
                         return (
                             <Answer
                                 key={idx}
                                 isDisabled={this.props.isNextReady}
-                                correct={item.correct}
+                                isCorrect={item.correct}
                                 hint={item.hint}
                                 onClick={this.props.onAnswer}
                             >
@@ -42,14 +45,9 @@ class SmartQuestion extends Component {
 SmartQuestion.propTypes = {
     isNextReady: PropTypes.bool,
     onAnswer: PropTypes.func,
-    step: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ]),
-    totalSteps: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.string
-    ])
+    step: PropTypes.number,
+    question: PropTypes.object,
+    totalSteps: PropTypes.number
 };
 
 const mapStateToProps = state => ({
