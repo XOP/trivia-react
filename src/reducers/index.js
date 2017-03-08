@@ -16,7 +16,7 @@ const currentStepReducer = (state = initialState.currentStep, action) => {
 const currentQuestionReducer = (state = initialState.currentQuestion, action) => {
     switch (action.type) {
         case 'NEXT_QUESTION':
-            return questionsReducer()[action.payload + 1];
+            return questionsReducer()[action.payload];
 
         default:
             return state;

@@ -34,13 +34,11 @@ class App extends Component {
     }
 
     render() {
-        const totalSteps = 10;
-
-        const { currentStep } = this.props;
+        const { currentStep, totalSteps } = this.props;
 
         const isStart = currentStep === 0;
         const isComplete = currentStep === totalSteps + 1;
-        const isLast = currentStep === totalSteps;
+        const isLastQuestion = currentStep === totalSteps;
 
         return (
             <div className="container">
@@ -57,7 +55,7 @@ class App extends Component {
                         <ActionBar
                             isStart={isStart}
                             isComplete={isComplete}
-                            isLastQuestion={isLast}
+                            isLastQuestion={isLastQuestion}
                             isNextReady={this.state.isNextReady}
                             onStartClick={this.handleAnswer}
                             onNextClick={this.handleAnswer}
@@ -73,13 +71,20 @@ class App extends Component {
 
 App.propTypes = {
     currentStep: PropTypes.number,
+    totalSteps: PropTypes.number,
     nextQuestionSelect: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ nextQuestionSelect }, dispatch);
 
-const mapStateToProps = state => ({
-    currentStep: state.currentStep
-});
+const mapStateToProps = state => {
+    const currentStep = state.currentStep;
+    const totalSteps = state.questions.length;
+
+    return {
+        currentStep,
+        totalSteps
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
