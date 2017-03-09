@@ -1,2 +1,3 @@
-# trivia-react
+# Trivia React
+
 Trivia based game
