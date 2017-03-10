@@ -48,28 +48,35 @@ class App extends Component {
         this.props.nextQuestionReady();
     }
 
-    composeScore() {
+    renderResult(isComplete) {
+        if (!isComplete) return null;
+
         const {
             results,
             score,
             totalSteps
         } = this.props;
 
-        const allScores = Object.keys(results);
-        const highestScore = Math.max.apply(allScores, this);
+        const allScores = Object.keys(results).map(item => parseInt(item, 10));
+        const highestScore = Math.max.apply(null, allScores);
 
-        const userScore = (score <= highestScore) ? results[score] : results[highestScore];
+        const resultOutput = (score <= highestScore) ? results[score] : results[highestScore];
 
-        return `Your score: ${userScore} of ${totalSteps}`;
+        return (
+            <Splash
+                heading={`You score ${score} of ${totalSteps}`}
+                text={resultOutput}
+            />
+        );
     }
-
+    
     render() {
         const { 
             currentStep, 
             totalSteps,
             isNextReady
         } = this.props;
-
+        
         const isStart = currentStep === 0;
         const isComplete = currentStep === totalSteps + 1;
         const isLastQuestion = currentStep === totalSteps;
@@ -87,20 +94,17 @@ class App extends Component {
                             />
                         }
 
-                        {
-                            isComplete &&
-                            <Splash
-                                heading={this.composeScore()}
-                                text="Share your result"
-                            />
-                        }
+                        {this.renderResult(isComplete)}
 
-                        <Question
-                            step={currentStep}
-                            isNextReady={isNextReady}
-                            onAnswer={this.handleAnswer}
-                            totalSteps={totalSteps}
-                        />
+                        {
+                            !isComplete &&
+                            <Question
+                                step={currentStep}
+                                isNextReady={isNextReady}
+                                onAnswer={this.handleAnswer}
+                                totalSteps={totalSteps}
+                            />       
+                        }
 
                         <ActionBar
                             isStart={isStart}
@@ -122,9 +126,16 @@ class App extends Component {
 App.propTypes = {
     currentStep: PropTypes.number,
     totalSteps: PropTypes.number,
+    isNextReady: PropTypes.bool,
+    
+    score: PropTypes.number,
+    
+    firstQuestionSelect: PropTypes.func,
     nextQuestionSelect: PropTypes.func,
     selectAnswer: PropTypes.func,
-    nextQuestionReady: PropTypes.func
+    nextQuestionReady: PropTypes.func,
+
+    results: PropTypes.object
 };
 
 const mapDispatchToProps = dispatch => (
@@ -141,12 +152,14 @@ const mapStateToProps = state => {
     const totalSteps = state.questions.length;
     const isNextReady = state.isNextReady;
     const score = state.score;
+    const results = state.results;
 
     return {
         currentStep,
         totalSteps,
         isNextReady,
-        score
+        score,
+        results
     };
 };
 

@@ -24,7 +24,7 @@ const currentQuestionReducer = (state = initialState.currentQuestion, action) =>
             return questionsReducer()[0];
 
         case 'NEXT_QUESTION':
-            return questionsReducer()[action.payload];
+            return questionsReducer()[action.payload] || state;
 
         default:
             return state;
