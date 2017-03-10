@@ -50,6 +50,7 @@ SmartQuestion.propTypes = {
     totalSteps: PropTypes.number
 };
 
+// todo: ownProps
 const mapStateToProps = state => ({
     question: state.currentQuestion
 });

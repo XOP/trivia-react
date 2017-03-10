@@ -7,7 +7,8 @@ import {
     firstQuestionSelect,
     nextQuestionSelect,
     selectCorrectAnswer,
-    selectIncorrectAnswer
+    selectIncorrectAnswer,
+    nextQuestionReady
 } from '../actions';
 
 import ActionBar from '../_components/action-bar';
@@ -31,18 +32,16 @@ class App extends Component {
         this.handleStart = this.handleStart.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleAnswer = this.handleAnswer.bind(this);
-
-        this.state = {
-            isNextReady: false // todo
-        };
     }
 
     handleStart() {
         this.props.firstQuestionSelect();
+        this.props.nextQuestionReady(false); // ensure restart
     }
 
     handleNext() {
         this.props.nextQuestionSelect(this.props.currentStep);
+        this.props.nextQuestionReady(false);
     }
 
     handleAnswer(isCorrect) {
@@ -51,6 +50,8 @@ class App extends Component {
         } else {
             this.props.selectIncorrectAnswer();
         }
+        
+        this.props.nextQuestionReady();
     }
 
     composeScore() {
@@ -69,7 +70,11 @@ class App extends Component {
     }
 
     render() {
-        const { currentStep, totalSteps } = this.props;
+        const { 
+            currentStep, 
+            totalSteps,
+            isNextReady
+        } = this.props;
 
         const isStart = currentStep === 0;
         const isComplete = currentStep === totalSteps + 1;
@@ -98,7 +103,7 @@ class App extends Component {
 
                         <Question
                             step={currentStep}
-                            isNextReady={this.state.isNextReady}
+                            isNextReady={isNextReady}
                             onAnswer={this.handleAnswer}
                             totalSteps={totalSteps}
                         />
@@ -107,7 +112,7 @@ class App extends Component {
                             isStart={isStart}
                             isComplete={isComplete}
                             isLastQuestion={isLastQuestion}
-                            isNextReady={this.state.isNextReady}
+                            isNextReady={isNextReady}
                             onStartClick={this.handleStart}
                             onNextClick={this.handleNext}
                             resources={resources.actionBar}
@@ -125,7 +130,8 @@ App.propTypes = {
     totalSteps: PropTypes.number,
     nextQuestionSelect: PropTypes.func,
     selectCorrectAnswer: PropTypes.func,
-    selectIncorrectAnswer: PropTypes.func
+    selectIncorrectAnswer: PropTypes.func,
+    nextQuestionReady: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => (
@@ -133,18 +139,21 @@ const mapDispatchToProps = dispatch => (
         firstQuestionSelect,
         nextQuestionSelect,
         selectCorrectAnswer,
-        selectIncorrectAnswer
+        selectIncorrectAnswer,
+        nextQuestionReady
     }, dispatch)
 );
 
 const mapStateToProps = state => {
     const currentStep = state.currentStep;
     const totalSteps = state.questions.length;
+    const isNextReady = state.isNextReady;
     const score = state.score;
 
     return {
         currentStep,
         totalSteps,
+        isNextReady,
         score
     };
 };

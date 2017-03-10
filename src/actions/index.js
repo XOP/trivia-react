@@ -16,6 +16,6 @@ export const selectIncorrectAnswer = () => ({
 });
 
 export const nextQuestionReady = (ready = true) => ({
-    type: 'NEXT_QUESTION_READY',
+    type: 'NEXT_READY_TOGGLE',
     payload: ready
 });

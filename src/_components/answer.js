@@ -13,10 +13,12 @@ class Answer extends Component {
         };
     }
 
-    componentWillReceiveProps() {
-        this.setState({
-            isAnswered: false
-        });
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.children !== this.props.children) {
+            this.setState({
+                isAnswered: false
+            });
+        }
     }
 
     handleClick(e) {

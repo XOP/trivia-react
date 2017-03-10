@@ -31,6 +31,16 @@ const currentQuestionReducer = (state = initialState.currentQuestion, action) =>
     }
 };
 
+const isNextReadyReducer = (state = initialState.isNextReady, action) => {
+    switch (action.type) {
+        case 'NEXT_READY_TOGGLE':
+            return action.payload;
+
+        default:
+            return state;
+    }
+};
+
 const scoreReducer = (state = initialState.score, action) => {
     switch (action.type) {
         case 'SELECT_CORRECT_ANSWER':
@@ -47,6 +57,7 @@ const scoreReducer = (state = initialState.score, action) => {
 const rootReducer = combineReducers({
     currentStep: currentStepReducer,
     currentQuestion: currentQuestionReducer,
+    isNextReady: isNextReadyReducer,
 
     score: scoreReducer,
 
