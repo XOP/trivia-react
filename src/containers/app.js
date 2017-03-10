@@ -6,8 +6,7 @@ import { bindActionCreators } from 'redux';
 import {
     firstQuestionSelect,
     nextQuestionSelect,
-    selectCorrectAnswer,
-    selectIncorrectAnswer,
+    selectAnswer,
     nextQuestionReady
 } from '../actions';
 
@@ -45,12 +44,7 @@ class App extends Component {
     }
 
     handleAnswer(isCorrect) {
-        if (isCorrect) {
-            this.props.selectCorrectAnswer();
-        } else {
-            this.props.selectIncorrectAnswer();
-        }
-        
+        this.props.selectAnswer(isCorrect);
         this.props.nextQuestionReady();
     }
 
@@ -129,8 +123,7 @@ App.propTypes = {
     currentStep: PropTypes.number,
     totalSteps: PropTypes.number,
     nextQuestionSelect: PropTypes.func,
-    selectCorrectAnswer: PropTypes.func,
-    selectIncorrectAnswer: PropTypes.func,
+    selectAnswer: PropTypes.func,
     nextQuestionReady: PropTypes.func
 };
 
@@ -138,8 +131,7 @@ const mapDispatchToProps = dispatch => (
     bindActionCreators({
         firstQuestionSelect,
         nextQuestionSelect,
-        selectCorrectAnswer,
-        selectIncorrectAnswer,
+        selectAnswer,
         nextQuestionReady
     }, dispatch)
 );

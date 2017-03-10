@@ -43,11 +43,8 @@ const isNextReadyReducer = (state = initialState.isNextReady, action) => {
 
 const scoreReducer = (state = initialState.score, action) => {
     switch (action.type) {
-        case 'SELECT_CORRECT_ANSWER':
-            return state + 1;
-
-        case 'SELECT_INCORRECT_ANSWER':
-            return state;
+        case 'SELECT_ANSWER':
+            return action.payload ? state + 1 : state;
 
         default:
             return state;

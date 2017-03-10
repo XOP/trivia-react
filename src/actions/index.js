@@ -7,12 +7,9 @@ export const nextQuestionSelect = step => ({
     payload: step
 });
 
-export const selectCorrectAnswer = () => ({
-    type: 'SELECT_CORRECT_ANSWER'
-});
-
-export const selectIncorrectAnswer = () => ({
-    type: 'SELECT_INCORRECT_ANSWER'
+export const selectAnswer = isCorrect => ({
+    type: 'SELECT_ANSWER',
+    payload: isCorrect
 });
 
 export const nextQuestionReady = (ready = true) => ({
