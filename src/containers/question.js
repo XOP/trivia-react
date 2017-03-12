@@ -16,8 +16,13 @@ class SmartQuestion extends Component {
             answers = []
         } = this.props.question;
 
+        const isCorrect = this.props.isCorrect;
+        const isAnswered = this.props.isNextReady;
+        
         return (
             <Question
+                isAnswered={isAnswered}
+                isCorrect={isCorrect}
                 question={question}
                 step={this.props.step}
                 totalSteps={this.props.totalSteps}
@@ -27,7 +32,7 @@ class SmartQuestion extends Component {
                         return (
                             <Answer
                                 key={idx}
-                                isDisabled={this.props.isNextReady}
+                                isDisabled={isAnswered}
                                 isCorrect={item.correct}
                                 hint={item.hint}
                                 onClick={this.props.onAnswer}
@@ -43,6 +48,7 @@ class SmartQuestion extends Component {
 }
 
 SmartQuestion.propTypes = {
+    isCorrect: PropTypes.bool,
     isNextReady: PropTypes.bool,
     onAnswer: PropTypes.func,
     step: PropTypes.number,

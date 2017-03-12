@@ -24,6 +24,10 @@ class App extends Component {
         this.handleStart = this.handleStart.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handleAnswer = this.handleAnswer.bind(this);
+
+        this.state = {
+            isCorrect: true
+        };
     }
 
     handleStart() {
@@ -39,6 +43,8 @@ class App extends Component {
     handleAnswer(isCorrect) {
         this.props.selectAnswer(isCorrect);
         this.props.nextQuestionReady();
+        
+        this.setState({ isCorrect });
     }
 
     renderResult(isComplete) {
@@ -93,6 +99,7 @@ class App extends Component {
                             !isComplete &&
                             <Question
                                 step={currentStep}
+                                isCorrect={this.state.isCorrect}
                                 isNextReady={isNextReady}
                                 onAnswer={this.handleAnswer}
                                 totalSteps={totalSteps}
