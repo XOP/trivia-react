@@ -10,8 +10,8 @@ import {
     nextQuestionReady
 } from '../actions';
 
-import ActionBar from '../_components/action-bar';
-import Splash from '../_components/splash';
+import ActionBar from '../components/action-bar';
+import Splash from '../components/splash';
 
 import Question from './question';
 

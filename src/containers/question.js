@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux';
 
-import Answer from '../_components/answer';
-import Question from '../_components/question';
+import Answer from '../components/answer';
+import Question from '../components/question';
 
 class SmartQuestion extends Component {
     render() {
