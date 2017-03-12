@@ -13,6 +13,7 @@ import {
 import resources from '../resources';
 
 import ActionBar from '../components/action-bar';
+import Progress from '../components/progress';
 import Splash from '../components/splash';
 
 import Question from './question';
@@ -79,6 +80,7 @@ class App extends Component {
         const isStart = currentStep === 0;
         const isComplete = currentStep === totalSteps + 1;
         const isLastQuestion = currentStep === totalSteps;
+        const isGame = !isStart && !isComplete;
 
         return (
             <div className="container">
@@ -93,6 +95,16 @@ class App extends Component {
                             />
                         }
 
+                        {
+                            isGame &&
+                            <Progress
+                                current={currentStep - 1}
+                                total={totalSteps}
+                            />
+                        }
+
+                        <br/>
+                        
                         {this.renderResult(isComplete)}
 
                         {
@@ -105,7 +117,7 @@ class App extends Component {
                                 totalSteps={totalSteps}
                             />       
                         }
-
+                        
                         <ActionBar
                             isStart={isStart}
                             isComplete={isComplete}
