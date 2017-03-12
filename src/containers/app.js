@@ -10,19 +10,12 @@ import {
     nextQuestionReady
 } from '../actions';
 
+import resources from '../resources';
+
 import ActionBar from '../components/action-bar';
 import Splash from '../components/splash';
 
 import Question from './question';
-
-const resources = {
-    actionBar: {
-        nextQuestion: 'Next Question',
-        restart: 'Restart',
-        showResults: 'Show Results',
-        start: 'Start'
-    }
-};
 
 class App extends Component {
     constructor(props) {
@@ -64,7 +57,7 @@ class App extends Component {
 
         return (
             <Splash
-                heading={`You score ${score} of ${totalSteps}`}
+                heading={`${resources.result.youScore} ${score} ${resources.result.of} ${totalSteps}`}
                 text={resultOutput}
             />
         );
@@ -89,8 +82,8 @@ class App extends Component {
                         {
                             !isComplete &&
                             <Splash
-                                heading="Welcome"
-                                text="Let's play Trivia"
+                                heading={resources.start.heading}
+                                text={resources.start.subheading}
                             />
                         }
 
