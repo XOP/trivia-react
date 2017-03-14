@@ -6,18 +6,18 @@ import questionsReducer from './questionsReducer';
 import resultsReducer from './resultsReducer';
 
 import {
-    FIRST_QUESTION,
-    NEXT_QUESTION,
-    NEXT_READY_TOGGLE,
-    SELECT_ANSWER
+    REQUESTED_FIRST_QUESTION,
+    REQUESTED_NEXT_QUESTION,
+    TOGGLED_NEXT_READY,
+    SELECTED_ANSWER
 } from '../constants';
 
 const currentStepReducer = (state = initialState.currentStep, action) => {
     switch (action.type) {
-        case FIRST_QUESTION:
+        case REQUESTED_FIRST_QUESTION:
             return initialState.currentStep + 1;
 
-        case NEXT_QUESTION:
+        case REQUESTED_NEXT_QUESTION:
             return action.payload + 1;
 
         default:
@@ -27,10 +27,10 @@ const currentStepReducer = (state = initialState.currentStep, action) => {
 
 const currentQuestionReducer = (state = initialState.currentQuestion, action) => {
     switch (action.type) {
-        case FIRST_QUESTION:
+        case REQUESTED_FIRST_QUESTION:
             return questionsReducer()[0];
 
-        case NEXT_QUESTION:
+        case REQUESTED_NEXT_QUESTION:
             return questionsReducer()[action.payload] || state;
 
         default:
@@ -40,7 +40,7 @@ const currentQuestionReducer = (state = initialState.currentQuestion, action) =>
 
 const isNextReadyReducer = (state = initialState.isNextReady, action) => {
     switch (action.type) {
-        case NEXT_READY_TOGGLE:
+        case TOGGLED_NEXT_READY:
             return action.payload;
 
         default:
@@ -50,7 +50,7 @@ const isNextReadyReducer = (state = initialState.isNextReady, action) => {
 
 const scoreReducer = (state = initialState.score, action) => {
     switch (action.type) {
-        case SELECT_ANSWER:
+        case SELECTED_ANSWER:
             return action.payload ? state + 1 : state;
 
         default:
