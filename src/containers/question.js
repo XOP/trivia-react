@@ -18,7 +18,7 @@ class SmartQuestion extends Component {
 
         const isCorrect = this.props.isCorrect;
         const isAnswered = this.props.isNextReady;
-        
+
         return (
             <Question
                 isAnswered={isAnswered}
@@ -56,8 +56,12 @@ SmartQuestion.propTypes = {
     totalSteps: PropTypes.number
 };
 
-// todo: ownProps
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+    isCorrect: ownProps.isCorrect,
+    isNextReady: ownProps.isNextReady,
+    onAnswer: ownProps.onAnswer,
+    step: ownProps.step,
+    totalSteps: ownProps.totalSteps,
     question: state.currentQuestion
 });
 
