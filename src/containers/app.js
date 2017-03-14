@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import {
     firstQuestionSelect,
@@ -44,7 +43,7 @@ class App extends Component {
     handleAnswer(isCorrect) {
         this.props.selectAnswer(isCorrect);
         this.props.nextQuestionReady();
-        
+
         this.setState({ isCorrect });
     }
 
@@ -69,14 +68,14 @@ class App extends Component {
             />
         );
     }
-    
+
     render() {
-        const { 
-            currentStep, 
+        const {
+            currentStep,
             totalSteps,
             isNextReady
         } = this.props;
-        
+
         const isStart = currentStep === 0;
         const isComplete = currentStep === totalSteps + 1;
         const isLastQuestion = currentStep === totalSteps;
@@ -104,7 +103,7 @@ class App extends Component {
                         }
 
                         <br/>
-                        
+
                         {this.renderResult(isComplete)}
 
                         {
@@ -115,9 +114,9 @@ class App extends Component {
                                 isNextReady={isNextReady}
                                 onAnswer={this.handleAnswer}
                                 totalSteps={totalSteps}
-                            />       
+                            />
                         }
-                        
+
                         <ActionBar
                             isStart={isStart}
                             isComplete={isComplete}
@@ -139,9 +138,9 @@ App.propTypes = {
     currentStep: PropTypes.number,
     totalSteps: PropTypes.number,
     isNextReady: PropTypes.bool,
-    
+
     score: PropTypes.number,
-    
+
     firstQuestionSelect: PropTypes.func,
     nextQuestionSelect: PropTypes.func,
     selectAnswer: PropTypes.func,
@@ -150,14 +149,12 @@ App.propTypes = {
     results: PropTypes.object
 };
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
-        firstQuestionSelect,
-        nextQuestionSelect,
-        selectAnswer,
-        nextQuestionReady
-    }, dispatch)
-);
+const mapDispatchToProps = {
+    firstQuestionSelect,
+    nextQuestionSelect,
+    selectAnswer,
+    nextQuestionReady
+};
 
 const mapStateToProps = state => {
     const currentStep = state.currentStep;
