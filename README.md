@@ -15,3 +15,6 @@ Screenshot:
 For simplicity application consumes [js objects](https://github.com/XOP/trivia-react/blob/master/src/reducers/questionsReducer.js) as resources (texts, data).  
 
 In real project App should be a Component itself with everything provided as props, potentially with the config params.
+
+See also:
+- [Memory React](https://github.com/XOP/memory-react)
